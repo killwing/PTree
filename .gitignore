@@ -10,3 +10,9 @@
 *.lai
 *.la
 *.a
+
+# Dependency files
+*.d
+
+# out bin file
+tester
