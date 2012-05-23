@@ -1,5 +1,5 @@
-PROG = tester
-SRCS = tester.cpp 
+PROG = test
+SRCS = test.cpp 
 DEPS = $(SRCS:.cpp=.d)
 OBJS = $(SRCS:.cpp=.o)
 

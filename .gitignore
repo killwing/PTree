@@ -15,4 +15,4 @@
 *.d
 
 # out bin file
-tester
+test
