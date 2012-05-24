@@ -56,6 +56,14 @@ int main() {
     assert(car.color == carOut.color);
     assert(car.price == carOut.price);
 
+    // push as vector
+    int income = 100;
+    pt.push("person.deposit", income++);
+    pt.push("person.deposit", income++);
+    pt.push("person.deposit", income++);
+    const std::vector<int>& sum = pt.get("person.deposit");
+    assert(sum.size() == 3);
+
     // del
     string error;
     pt.del("person.name");

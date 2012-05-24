@@ -6,7 +6,6 @@
 #include <map>
 #include <queue>
 #include <string>
-#include <cassert>
 #include <boost/any.hpp>
 
 template <typename Key>
@@ -35,8 +34,12 @@ public:
     template <typename T>
     const T& get(Path path) const;
 
-    void put(Path path, const boost::any& value);
-    void push(Path path, const boost::any& value);
+    template <typename T>
+    void put(Path path, const T& value);
+
+    template <typename T>
+    void push(Path path, const T& value);
+
     void del(Path path);
 
     void keysTree(std::ostream& o, int indent = 0) const;

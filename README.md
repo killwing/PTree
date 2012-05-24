@@ -3,4 +3,4 @@ PTree
 
 a property tree utility
 
-Under development!
+see `test.cpp` for usage examples

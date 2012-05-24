@@ -1,5 +1,7 @@
 #include "Exceptions.h"
 
+#include <cassert>
+
 template <typename Key>
 PTree<Key>::Path::Path() {
 }
@@ -131,16 +133,15 @@ PTree<Key>::get(Path path) const {
     }
 }
 
-template <typename Key> void
-PTree<Key>::put(Path path, const boost::any& value) {
-    using namespace boost;
-
+template <typename Key>
+template <typename T> void
+PTree<Key>::put(Path path, const T& value) {
     if (path.empty()) {
         return;
     }
 
     std::string p = path.pop();
-    any& a = data_[p];
+    boost::any& a = data_[p];
     if (path.empty()) {
         a = value;
     } else {
@@ -154,10 +155,35 @@ PTree<Key>::put(Path path, const boost::any& value) {
     }
 }
 
+template <typename Key> 
+template <typename T> void
+PTree<Key>::push(Path path, const T& value) {
+    if (path.empty()) {
+        return;
+    }
+
+    std::string p = path.pop();
+    boost::any& a = data_[p];
+    if (path.empty()) {
+        std::vector<T>* v = boost::any_cast<std::vector<T> >(&a);
+        if (v) {
+            v->push_back(value);
+        } else {
+            a = std::vector<T>(1, value); // make a new vector
+        }
+    } else {
+        PTree* child = boost::any_cast<PTree>(&a);
+        if (!child) {
+            a = PTree(); // make a new tree
+            child = boost::any_cast<PTree>(&a); // update
+        }
+        assert(child);
+        child->push(path, value);
+    }
+}
+
 template <typename Key> void
 PTree<Key>::del(Path path) {
-    using namespace boost;
-
     if (path.empty()) {
         return;
     }
