@@ -92,45 +92,15 @@ PTree<Key>::get(Path path) const {
 template <typename Key> 
 template <typename T> T&
 PTree<Key>::get(Path path) {
-    std::string p = path.pop();
-    typename TreeType::iterator it = data_.find(p);
-    if (it != data_.end()) {
-        if (path.empty()) {
-            return ExConvertor<T>(it->second);
-        } else {
-            PTree* child = boost::any_cast<PTree>(&(it->second));
-            if (child) {
-                return child->get<T>(path);
-            } else {
-                throw PTreeBadPath("invalid path");
-            }
-        }
-
-    } else {
-        throw PTreeBadPath("path not found");
-    }
+    T& v = get(path);
+    return v;
 }
 
 template <typename Key> 
 template <typename T> const T&
 PTree<Key>::get(Path path) const {
-    std::string p = path.pop();
-    typename TreeType::const_iterator it = data_.find(p);
-    if (it != data_.end()) {
-        if (path.empty()) {
-            return ExConstConvertor<T>(it->second);
-        } else {
-            const PTree* child = boost::any_cast<PTree>(&(it->second));
-            if (child) {
-                return child->get<T>(path);
-            } else {
-                throw PTreeBadPath("invalid path");
-            }
-        }
-
-    } else {
-        throw PTreeBadPath("path not found");
-    }
+    const T& v = get(path);
+    return v;
 }
 
 template <typename Key>

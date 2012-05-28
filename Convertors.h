@@ -43,41 +43,5 @@ private:
     const boost::any& data_;
 };
 
-template <typename T>
-class ExConvertor {
-public:
-    ExConvertor(boost::any& a) : data_(a) {
-    }
-
-    operator T&() {
-        T* v = boost::any_cast<T>(&data_);
-        if (v) {
-            return *v;
-        } else {
-            throw PTreeBadType("cast error");
-        }
-    }
-private:
-    boost::any& data_;
-};
-
-template <typename T>
-class ExConstConvertor {
-public:
-    ExConstConvertor(const boost::any& a) : data_(a) {
-    }
-
-    operator const T&() const {
-        const T* v = boost::any_cast<T>(&data_);
-        if (v) {
-            return *v;
-        } else {
-            throw PTreeBadType("const cast error");
-        }
-    }
-private:
-    const boost::any& data_;
-};
-
 #endif // CONVERTORS_H
 
