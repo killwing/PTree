@@ -20,6 +20,7 @@ int main() {
     assert(name == nameOut);
     string nameEx(pt.get<string>("person.name")); // explicit syntax, need convert explicitly
     assert(name == nameEx);
+    assert(pt.isValidPath("person.name"));
 
     // const get
     const PTree<string>& cpt = pt;
@@ -74,6 +75,7 @@ int main() {
         cout << "catched PTreeError: " << error << endl;
     }
     assert(!error.empty());
+    assert(!pt.isValidPath("person.name"));
 
     cout << "all test passed" << endl;
     return 0;

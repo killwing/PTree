@@ -25,6 +25,8 @@ public:
         std::queue<Key> p_;
     };
 
+    bool isValidPath(Path path) const;
+
     Convertor get(Path path);
     ConstConvertor get(Path path) const;
 

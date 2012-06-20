@@ -46,6 +46,26 @@ PTree<Key>::Path::empty() const {
     return p_.empty();
 }
 
+template <typename Key> bool
+PTree<Key>::isValidPath(Path path) const {
+    std::string p = path.pop();
+    typename TreeType::const_iterator it = data_.find(p);
+    if (it != data_.end()) {
+        if (path.empty()) {
+            return true;
+        } else {
+            const PTree* child = boost::any_cast<PTree>(&(it->second));
+            if (child) {
+                return child->isValidPath(path);
+            } else {
+                return false;
+            }
+        }
+    } else {
+        return false;
+    }
+}
+
 template <typename Key> Convertor
 PTree<Key>::get(Path path) {
     std::string p = path.pop();
